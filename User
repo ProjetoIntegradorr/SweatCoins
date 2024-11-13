@@ -1,0 +1,29 @@
+package pacote;
+
+public class User {
+    private final String username;
+    private final String password;
+    private int points;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.points = 0; // Inicializa os pontos em 0.
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int points) {
+        this.points += points;
+    }
+}
