@@ -1,0 +1,27 @@
+package pacote;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class MainApp extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        UserManager userManager = new UserManager(); // Cria o gerenciador de usuários.
+        VBox vbox = new VBox(10);
+
+        // Inicializa o controlador de login e a tela de login.
+        new LoginController(primaryStage, vbox, userManager);
+
+        Scene scene = new Scene(vbox, 400, 300);
+        primaryStage.setTitle("Aplicativo Anti-Sedentarismo");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
