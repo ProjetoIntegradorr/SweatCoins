@@ -1,0 +1,62 @@
+package pacote;
+
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
+public class MainController {
+    private UserManager userManager;
+    private Stage primaryStage;
+    private VBox vbox;
+    private String usuarioLogado;
+
+    public MainController(Stage primaryStage, VBox vbox, UserManager userManager, String usuarioLogado) {
+        this.primaryStage = primaryStage;
+        this.vbox = vbox;
+        this.userManager = userManager;
+        this.usuarioLogado = usuarioLogado;
+        criarTelaPrincipal();
+    }
+
+    private void criarTelaPrincipal() {
+        vbox.getChildren().clear(); // Limpa a tela atual.
+
+        Label titulo = new Label("Bem-vindo, " + usuarioLogado + "!");
+        titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        Button btnVerPontos = new Button("Ver Pontos");
+        btnVerPontos.setOnAction(e -> mostrarPontos());
+
+        Button btnTrocarRecompensa = new Button("Trocar Pontos por Recompensa");
+        btnTrocarRecompensa.setOnAction(e -> mostrarRecompensas());
+
+        Button btnLogout = new Button("Sair");
+        btnLogout.setOnAction(e -> logout());
+
+        vbox.getChildren().addAll(titulo, btnVerPontos, btnTrocarRecompensa, btnLogout);
+        primaryStage.setScene(new Scene(vbox, 400, 300)); // Atualizando a cena para a tela principal
+    }
+
+    private void mostrarPontos() {
+        User user = userManager.getUsers().get(usuarioLogado);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Pontos");
+        alert.setHeaderText(null);
+        alert.setContentText("Você tem " + user.getPoints() + " pontos.");
+        alert.showAndWait();
+    }
+
+    private void mostrarRecompensas() {
+        User user = userManager.getUsers().get(usuarioLogado);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Recompensas");
+        alert.setHeaderText(null);
+        alert.setContentText("Você pode trocar seus " + user.getPoints() + " pontos por uma recompensa!");
+        alert.showAndWait();
+    }
+
+    private void logout() {
+        new LoginController(primaryStage, vbox, userManager); // Volta para a tela de login
+    }
+}
